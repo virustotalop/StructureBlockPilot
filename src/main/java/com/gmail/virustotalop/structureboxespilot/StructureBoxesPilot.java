@@ -29,6 +29,7 @@ public class StructureBoxesPilot extends JavaPlugin {
             IWorldEditHandler.inject();
             return true;
         } catch(Exception ex) {
+            ex.printStackTrace();
             return false;
         }
     }
