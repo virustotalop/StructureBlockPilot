@@ -47,7 +47,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Timer;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import static com.sk89q.worldedit.WorldEdit.getInstance;
 import static io.github.eirikh1996.structureboxes.utils.ChatUtils.COMMAND_PREFIX;
@@ -96,7 +95,6 @@ public class IWorldEditHandler extends WorldEditHandler {
 
     @Override
     public boolean pasteClipboard(UUID playerID, String schematicName, Clipboard clipboard, double angle, WorldEditLocation pasteLoc) {
-        StructureBoxesPilot.get().getLogger().log(Level.INFO, "Pasting clipboard");
         Player player = Bukkit.getServer().getPlayer(playerID);
         String playerName = player.getName();
         final long start = System.currentTimeMillis();
@@ -140,21 +138,15 @@ public class IWorldEditHandler extends WorldEditHandler {
                     BaseBlock baseBlock = clipboard.getBlock(pos);
                     int id = baseBlock.getId();
                     if(id == Material.SIGN_POST.getId() || id == Material.WALL_SIGN.getId()) {  //Pilot start
-                        StructureBoxesPilot.get().getLogger().log(Level.INFO, "Block id: " + id);
                         CompoundTag nbt = baseBlock.getNbtData();
                         String firstLine = nbt.getString("Text1");
-                        StructureBoxesPilot.get().getLogger().log(Level.INFO, "First line: " + firstLine);
                         if(firstLine != null && firstLine.contains("Pilot:")) {
                             String tagContents = "{\"text\":\"%player%\"}".replace("%player%", playerName);
-                            StructureBoxesPilot.get().getLogger().log(Level.INFO, "Tag contents: " + tagContents);
                             Map<String, Tag> copiedTags = new HashMap<>(nbt.getValue());
                             copiedTags.put("Text2", new StringTag(tagContents));
                             nbt = nbt.setValue(copiedTags);
                         }
                         baseBlock.setNbtData(nbt); //Set nbt again
-                        for(Map.Entry<String, Tag> next : nbt.getValue().entrySet()) {
-                            StructureBoxesPilot.get().getLogger().log(Level.INFO, next.getKey() + " : " + next.getValue().toString());
-                        }
                     }
                     try { //Not sure if this is needed
                         clipboard.setBlock(pos, baseBlock);
