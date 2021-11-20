@@ -16,13 +16,22 @@ import java.util.Map;
 
 public class StructureBoxesPilot extends JavaPlugin {
 
+    private static StructureBoxesPilot instance;
+
+    public static StructureBoxesPilot get() {
+        return instance;
+    }
+
     @Override
-    public void onEnable() {
+    public void onLoad() {
+        instance = this;
         this.getLogger().info("Attempting to inject new WorldEditHandler into StructureBoxes");
         if(this.injectHandler()) {
             this.getLogger().info("Successfully injected a new WorldEditHandler into StructureBoxes");
         } else {
             this.getLogger().info("Unable to inject a new WorldEditHandler into StructureBoxes, check console...");
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
         }
     }
 
