@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'eclipse'
+    id 'idea'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group 'com.gmail.virustotalop'
+version '1.0.0'
+
+repositories {
+    flatDir { dirs 'libs' }
+    mavenCentral()
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"}
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
+}
+
+processResources {
+    from(sourceSets.main.resources) {
+        include 'plugin.yml'
+        expand 'pluginVersion': project.version
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('StructureBlockPilot')
+    archiveClassifier.set('')
+}
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:22.0.0'
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly name: 'StructureBoxes-Bukkit'
+    compileOnly name: 'worldedit-bukkit-6.1.9'
+}

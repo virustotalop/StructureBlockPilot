@@ -1,0 +1,5 @@
+name: StructureBoxesPilot
+main: com.gmail.virustotalop.structureboxespilot.StructureBoxesPilot
+version: ${pluginVersion}
+author: VirusTotal
+depend: ["StructureBoxes"]
