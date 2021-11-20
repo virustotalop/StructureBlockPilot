@@ -1,6 +1,6 @@
 package com.gmail.virustotalop.structureboxespilot;
 
-import com.gmail.virustotalop.structureboxespilot.worldedit.PilotWorldEditHandler;
+import io.github.eirikh1996.structureboxes.compat.we6.IWorldEditHandler;
 import io.github.eirikh1996.structureboxes.StructureBoxes;
 import io.github.eirikh1996.structureboxes.localisation.I18nSupport;
 import io.github.eirikh1996.structureboxes.settings.Settings;
@@ -27,30 +27,11 @@ public class StructureBoxesPilot extends JavaPlugin {
     }
 
     private boolean injectHandler() {
-        //WorldEditHandler
-        Plugin worldEditPlugin = this.getServer().getPluginManager().getPlugin("WorldEdit");
-        final Map data;
         try {
-            File weConfig = new File(worldEditPlugin.getDataFolder(), "config" + (Settings.FAWE ? "-legacy" : "") + ".yml");
-            Yaml yaml = new Yaml();
-            data = yaml.load(new FileInputStream(weConfig));
-        } catch (IOException e){
-            getLogger().severe(I18nSupport.getInternationalisedString("Startup - Error reading WE config"));
-            e.printStackTrace();
+            IWorldEditHandler.inject();
+            return true;
+        } catch(Exception ex) {
             return false;
         }
-        File schemDir = new File(worldEditPlugin.getDataFolder(), (String) ((Map) data.get("saving")).get("dir"));
-        StructureBoxes structureBoxes = (StructureBoxes) this.getServer()
-                .getPluginManager()
-                .getPlugin("StructureBoxes");
-        try {
-            Field field = structureBoxes.getClass().getDeclaredField("worldEditHandler");
-            field.setAccessible(true);
-            field.set(structureBoxes, new PilotWorldEditHandler(schemDir, structureBoxes));
-            return true;
-        } catch(NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

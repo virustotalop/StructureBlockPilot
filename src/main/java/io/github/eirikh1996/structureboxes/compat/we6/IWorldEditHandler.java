@@ -1,4 +1,4 @@
-package com.gmail.virustotalop.structureboxespilot.worldedit;
+package io.github.eirikh1996.structureboxes.compat.we6;
 
 import com.sk89q.jnbt.CompoundTag;
 import com.sk89q.jnbt.StringTag;
@@ -38,9 +38,9 @@ import static com.sk89q.worldedit.WorldEdit.getInstance;
 import static io.github.eirikh1996.structureboxes.utils.ChatUtils.COMMAND_PREFIX;
 import static java.lang.Math.PI;
 
-public class PilotWorldEditHandler extends WorldEditHandler {
+public class IWorldEditHandler extends WorldEditHandler {
 
-    public PilotWorldEditHandler(File schemDir, SBMain sbMain){
+    public IWorldEditHandler(File schemDir, SBMain sbMain){
         super(schemDir, sbMain);
     }
     @Override
@@ -289,6 +289,10 @@ public class PilotWorldEditHandler extends WorldEditHandler {
             }
         }
         return count;
+    }
+
+    public static Class<?> inject() {
+        return IWorldEditHandler.class;
     }
 
 
