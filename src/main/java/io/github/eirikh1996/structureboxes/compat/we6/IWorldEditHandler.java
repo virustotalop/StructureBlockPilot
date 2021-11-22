@@ -1,6 +1,5 @@
 package io.github.eirikh1996.structureboxes.compat.we6;
 
-import com.gmail.virustotalop.structureboxespilot.StructureBoxesPilot;
 import com.sk89q.jnbt.CompoundTag;
 import com.sk89q.jnbt.StringTag;
 import com.sk89q.jnbt.Tag;
